@@ -1,0 +1,120 @@
+<a
+	data-element="link"
+	data-link-type="default"
+	href="https://www.mastercardgiftcard.com/create-a-custom-design"
+	id="cdq_element_30"
+	style="
+		display: inline-block;
+		margin-top: 0px;
+		margin-bottom: 0px;
+		padding-top: 0px;
+		padding-bottom: 0px;
+	"
+	tabindex="0"
+	target=""
+>
+	<div
+		class="pagebuilder-slide-wrapper background-image-6672dee908da8"
+		data-background-images='{\"desktop_image\":\"https://www.mastercardgiftcard.com/media/wysiwyg/Job_6126753989_-_March_April_Creatives_Version_1_Business.webp\",\"mobile_image\":\"https://www.mastercardgiftcard.com/media/wysiwyg/Job_6126753989_-_March_April_Creatives_Mobile_Version_1_Business.webp\"}'
+		data-background-type="image"
+		data-element="wrapper"
+		data-pb-style="TNMLPG5"
+		data-video-fallback-src=""
+		data-video-lazy-load="true"
+		data-video-loop="true"
+		data-video-play-only-visible="true"
+		id="bgholder"
+	>
+		<div
+			class="pagebuilder-overlay pagebuilder-poster-overlay"
+			data-element="overlay"
+			data-overlay-color=""
+			data-pb-style="VADVRAK"
+			id="cdq_element_271"
+			style="display: flex"
+		>
+			<div class="pagebuilder-poster-content" id="cdq_element_272">
+				<div data-element="content" id="cdq_element_273"></div>
+			</div>
+		</div>
+	</div>
+	<style id="cdq_element_274" type="text/css">
+		.background-image-6672dee908da8 {
+			background-image: url(https://www.mastercardgiftcard.com/media/wysiwyg/Job_6126753989_-_March_April_Creatives_Version_1_Business.webp);
+		}
+		@media only screen and (max-width: 768px) and (min-width: 640px) {
+			.background-image-6672dee908da8 {
+				background-image: url(https://www.mastercardgiftcard.com/media/wysiwyg/Job_6126753989_-_March_April_Creatives_Mobile_Version_1_Business.webp);
+			}
+		}
+		@media only screen and (max-width: 640px) {
+			.background-image-6672dee908da8 {
+				background-image: url(https://www.mastercardgiftcard.com/media/wysiwyg/Job_6126753989_-_March_April_Creatives_Mobile_Version_1_Business.webp);
+			}
+		}
+	</style>
+</a>
+<a
+	id="catalog-button-desktop"
+	href="https://www.mastercardgiftcard.com/catalog"
+	target=""
+	data-link-type="default"
+	data-element="link"
+	tabindex="0"
+	style="
+		position: absolute;
+		top: 287.903px;
+		left: 641px;
+		width: 345px;
+		border-radius: 50px;
+		min-height: 42px !important;
+	"
+	><p style="visibility: hidden; border-radius: 25px">
+		Hero Desktop Catalog Button
+	</p></a
+>
+
+<script>
+	function overlayCardsDesktop() {
+		// under 1360 page with:
+		// container height is always 410
+
+		var heroImg = document.getElementById("bgholder");
+		var catalogButton = document.getElementById("catalog-button-desktop");
+		var imgWidth = bgholder.getWidth();
+		var imgHeight = (imgWidth / 1343) * 410;
+		var topMargin = (410 - imgHeight) / 2;
+		var topFromImage = (imgHeight * 294) / 410;
+		catalogButton.style.top = topMargin + topFromImage + "px";
+	}
+	function overlayCardsMobile() {
+		var heroImg = document.getElementById("mobile-hero");
+		var hero = document.getElementById("mobile-hero-overlay");
+		hero.style.top = heroImg.offsetTop + "px";
+		hero.style.left = heroImg.offsetLeft + "px";
+		hero.style.width = heroImg.offsetWidth + "px";
+		hero.style.height = heroImg.offsetHeight + "px";
+		var catalogButton = document.getElementById("catalog-button-mobile");
+		catalogButton.style.top =
+			heroImg.offsetTop + (heroImg.offsetHeight / 528) * 425 + "px";
+		catalogButton.style.left =
+			heroImg.offsetLeft + (heroImg.offsetWidth / 728) * 233 + "px";
+		catalogButton.style.width = (heroImg.offsetWidth / 728) * 264 + "px";
+		catalogButton.style.height = (heroImg.offsetHeight / 528) * 50 + "px";
+		var cardImg = document.getElementById("hero-card-img-mobile");
+		cardImg.style.top =
+			heroImg.offsetTop + (heroImg.offsetHeight / 528) * 70 + "px";
+		cardImg.style.left =
+			heroImg.offsetLeft + (heroImg.offsetWidth / 728) * 357 + "px";
+		cardImg.style.width = (heroImg.offsetWidth / 728) * 290 + "px";
+		cardImg.style.height = (heroImg.offsetHeight / 528) * 184 + "px";
+	}
+
+	window.onload = function (e) {
+		overlayCardsDesktop();
+		overlayCardsMobile();
+	};
+
+	window.addEventListener("resize", overlayCardsDesktop);
+	window.addEventListener("resize", overlayCardsMobile);
+</script>
