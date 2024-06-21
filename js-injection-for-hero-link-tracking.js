@@ -1,5 +1,6 @@
 // Testing mode to enable visible click targets
 var testing = true;
+var slides;
 
 // Declare the click targets for each slide
 // Define positions for full-sized window
@@ -41,7 +42,7 @@ var clickTargetsConfig = {
 			clickTargets: [
 				{
 					className: "ctaButtonLink",
-					top: "294px",
+					top: "194px",
 					left: "641px",
 					width: "345px",
 					height: "42px",
@@ -51,7 +52,7 @@ var clickTargetsConfig = {
 				},
 				{
 					className: "cardLink",
-					top: "294px",
+					top: "194px",
 					left: "141px",
 					width: "345px",
 					height: "42px",
@@ -69,7 +70,7 @@ var clickTargetsConfig = {
 			clickTargets: [
 				{
 					className: "ctaButtonLink",
-					top: "294px",
+					top: "394px",
 					left: "641px",
 					width: "345px",
 					height: "42px",
@@ -79,7 +80,7 @@ var clickTargetsConfig = {
 				},
 				{
 					className: "cardLink",
-					top: "294px",
+					top: "394px",
 					left: "141px",
 					width: "345px",
 					height: "42px",
@@ -91,11 +92,6 @@ var clickTargetsConfig = {
 		},
 	],
 };
-
-// Get all the slides in the slick slider
-var slides = document.querySelectorAll(
-	".slick-slide [data-content-type='slide']"
-);
 
 function isClickTargetsConfIsValid() {
 	// if it doesn't have the slides array, return false
@@ -172,7 +168,7 @@ function positionClickTarget(slideNo, clickTargetConfig, slideNo) {
 	var slide = slides[slideNo];
 
 	// Find the a tag in the slide
-	var aTag = slide.querySelector(`.${clickTargetConfig.className}`);
+	var aTag = slide.querySelector("." + clickTargetConfig.className);
 
 	// Find the element that has the background image
 	var bgHolder = slides[slideNo].querySelector(".pagebuilder-slide-wrapper");
@@ -180,8 +176,6 @@ function positionClickTarget(slideNo, clickTargetConfig, slideNo) {
 	// Calculate the position and size based on window size and the original position
 	recalculatedConfig = calculateClickTargetPosition(clickTargetConfig);
 
-	// TODO: Read parameters from the clickTargetsConfig object
-	// TODO: Calculate where they should be positioned
 	aTag.style.position = "absolute";
 	aTag.style.top = recalculatedConfig.top;
 	aTag.style.left = recalculatedConfig.left;
@@ -214,6 +208,11 @@ function positionAllClickTargets() {
 }
 
 window.onload = function (e) {
+	// Get all the slides in the slick slider
+	slides = document.querySelectorAll(
+		".slick-slide [data-content-type='slide']"
+	);
+
 	if (isClickTargetsConfIsValid()) {
 		insertHeroClickTargetsToDOM();
 		positionAllClickTargets();
