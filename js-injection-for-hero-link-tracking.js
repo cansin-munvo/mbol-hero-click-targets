@@ -6,66 +6,84 @@ var testing = true;
 var clickTargetsConfig = {
 	slides: [
 		{
+			backgroundImage: {
+				height: "410px",
+				width: "1343px",
+			},
 			clickTargets: [
 				{
-					class: ".ctaButtonLink",
+					className: "ctaButtonLink",
 					top: "294px",
 					left: "641px",
 					width: "345px",
 					height: "42px",
+					borderRadius: "21px",
 					innerHTML:
 						'<p style="visibility: hidden;>Hero slide 1 CTA link</p>',
 				},
 				{
-					class: ".cardLink",
+					className: "cardLink",
 					top: "294px",
 					left: "141px",
 					width: "345px",
 					height: "42px",
+					borderRadius: "21px",
 					innerHTML:
 						'<p style="visibility: hidden;>Hero slide 1 card link</p>',
 				},
 			],
 		},
 		{
+			backgroundImage: {
+				height: "410px",
+				width: "1343px",
+			},
 			clickTargets: [
 				{
-					class: ".ctaButtonLink",
+					className: "ctaButtonLink",
 					top: "294px",
 					left: "641px",
 					width: "345px",
 					height: "42px",
+					borderRadius: "21px",
 					innerHTML:
 						'<p style="visibility: hidden;>Hero slide 2 CTA link</p>',
 				},
 				{
-					class: ".cardLink",
+					className: "cardLink",
 					top: "294px",
 					left: "141px",
 					width: "345px",
 					height: "42px",
+					borderRadius: "21px",
 					innerHTML:
 						'<p style="visibility: hidden;>Hero slide 2 card link</p>',
 				},
 			],
 		},
 		{
+			backgroundImage: {
+				height: "410px",
+				width: "1343px",
+			},
 			clickTargets: [
 				{
-					class: ".ctaButtonLink",
+					className: "ctaButtonLink",
 					top: "294px",
 					left: "641px",
 					width: "345px",
 					height: "42px",
+					borderRadius: "21px",
 					innerHTML:
 						'<p style="visibility: hidden;>Hero slide 3 CTA link</p>',
 				},
 				{
-					class: ".cardLink",
+					className: "cardLink",
 					top: "294px",
 					left: "141px",
 					width: "345px",
 					height: "42px",
+					borderRadius: "21px",
 					innerHTML:
 						'<p style="visibility: hidden;>Hero slide 3 card link</p>',
 				},
@@ -96,42 +114,80 @@ function isClickTargetsConfIsValid() {
 
 // Create copies of the a tags in each slide and append them to the slide
 // This accounts changes in link targets and the number of slides
-// TODO: Read class name and # of click targets from the clickTargetsConfig object
 function insertHeroClickTargetsToDOM() {
-	for (var i = 0; i < slides.length; i++) {
-		var originalATag = slides[i].querySelector("a");
+	// Loop the slides in the DOM
+	slideIndex = 0;
+	clickTargetsConfig.slides.forEach(function (slide) {
+		// Get the original a tag of this slide
+		var originalATag = slides[slideIndex].querySelector("a");
 
-		// Insert the a tag for the CTA
-		var ctaButtonLink = originalATag.cloneNode(true);
-		ctaButtonLink.classList.add("ctaButtonLink");
-		ctaButtonLink.removeAttribute("data-element");
-		ctaButtonLink.innerHTML = `<p style="visibility: hidden;>Hero slide #${i} card link.</p>`;
-		slides[i].appendChild(ctaButtonLink);
+		// Loop click targets
+		// Duplicate the original a tag of this slide for each click target defined in the configuration
+		clickTargetIndex = 0;
+		slide.clickTargets.forEach(function (clickTarget) {
+			var ctaButtonLink = originalATag.cloneNode(true);
 
-		// Insert the a tag for the the card image
-		var cardLink = originalATag.cloneNode(true);
-		cardLink.classList.add("cardLink");
-		ctaButtonLink.removeAttribute("data-element");
-		cardLink.innerHTML = `<p style="visibility: hidden;>Hero slide #${i} CTA link.</p>`;
-		slides[i].appendChild(cardLink);
+			// Add the class defined in config to the a tag
+			if (testing) {
+				console.log(
+					`Adding class ${clickTargetsConfig.slides[slideIndex].clickTargets[clickTargetIndex].className} to slide ${slideIndex} click target ${clickTargetIndex}`
+				);
+			}
+			ctaButtonLink.classList.add(
+				clickTargetsConfig.slides[slideIndex].clickTargets[
+					clickTargetIndex
+				].className
+			);
+
+			// Remove the attribute that adds min-height css
+			ctaButtonLink.removeAttribute("data-element");
+
+			// Add the configured innerHTML to the a tag for analytics
+			ctaButtonLink.innerHTML =
+				clickTargetsConfig.slides[slideIndex].clickTargets[
+					clickTargetIndex
+				].innerHTML;
+
+			// Insert the a tag into the slide
+			slides[slideIndex].appendChild(ctaButtonLink);
+			clickTargetIndex++;
+		});
+		slideIndex++;
+	});
+}
+
+// Calculate the position of the click target in the slide
+// based on where it should be in full-sized window and the current viewport size
+// TODO: Calculations
+function calculateClickTargetPosition(clickTargetConfig) {
+	if (testing) {
+		console.log("Re-calculating click target positions and sizes...");
 	}
+	return clickTargetConfig;
 }
 
 // Position a click target in slides
-// TODO: Read parameters from the clickTargetsConfig object
-function positionClickTarget(slideNo, aClass, top, left, width, height) {
+function positionClickTarget(slideNo, clickTargetConfig, slideNo) {
 	// Find the slide of the given number
 	var slide = slides[slideNo];
 
 	// Find the a tag in the slide
-	var aTag = slide.querySelector(aClass);
+	var aTag = slide.querySelector(`.${clickTargetConfig.className}`);
 
+	// Find the element that has the background image
+	var bgHolder = slides[slideNo].querySelector(".pagebuilder-slide-wrapper");
+
+	// Calculate the position and size based on window size and the original position
+	recalculatedConfig = calculateClickTargetPosition(clickTargetConfig);
+
+	// TODO: Read parameters from the clickTargetsConfig object
+	// TODO: Calculate where they should be positioned
 	aTag.style.position = "absolute";
-	aTag.style.top = "294px";
-	aTag.style.left = "641px";
-	aTag.style.height = "42px";
-	aTag.style.width = "345px";
-	aTag.style.borderRadius = "21px";
+	aTag.style.top = recalculatedConfig.top;
+	aTag.style.left = recalculatedConfig.left;
+	aTag.style.height = recalculatedConfig.height;
+	aTag.style.width = recalculatedConfig.width;
+	aTag.style.borderRadius = recalculatedConfig.borderRadius;
 
 	// Reset the testing styles and apply if testing is enabled this time
 	aTag.style.background = "none";
@@ -144,20 +200,14 @@ function positionClickTarget(slideNo, aClass, top, left, width, height) {
 
 // Iterate over each slide configuration and position the click target
 function positionAllClickTargets() {
-	// Loop slides
+	// Loop slides from config
 	slideIndex = 0;
 	clickTargetsConfig.slides.forEach(function (slide) {
-		// Get the element that has the background image
-		var bgHolder = slides[slideIndex].querySelector(
-			".pagebuilder-slide-wrapper"
-		);
-		console.log(bgHolder);
-
-		// Loop click targets
+		// Loop click targets from config
 		clickTargetIndex = 0;
 		slide.clickTargets.forEach(function (clickTarget) {
-			// console.log(clickTarget);
-			positionClickTarget(slideIndex, ".ctaButtonLink");
+			positionClickTarget(slideIndex, clickTarget, slideIndex);
+			clickTargetIndex++;
 		});
 		slideIndex++;
 	});
@@ -171,3 +221,4 @@ window.onload = function (e) {
 };
 
 // Listen for changes in the size and loading, reposition the click targets
+window.addEventListener("resize", positionAllClickTargets);
