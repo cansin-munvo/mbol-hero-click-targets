@@ -23,23 +23,43 @@ function insertHeroClickTargetsToDOM() {
 }
 
 // Position a click target in slides
-function positionClickTarget(slideNo, aClass) {
+function positionClickTarget(slideNo, aClass, top, left, width, height, testing = false) {
 	// Find the slide of the given number
-	var slide = slides[slideNo + 1];
+	var slide = slides[slideNo - 1];
 
 	// Find the a tag in the slide
 	var aTag = slide.querySelector(aClass);
 
 	aTag.style.position = "absolute";
-	aTag.style.background = "red";
-	aTag.style.top = "293 px";
-	aTag.style.left = "641 px";
-	aTag.style.width = "345 px";
-	aTag.style.minHeight = "42 px !important";
+	aTag.style.top = "294px";
+	aTag.style.left = "641px";
+	aTag.style.width = "345px";
+	aTag.style.minHeight = "42px !important";
+	aTag.style.borderRadius = "21px";
 
-	// var slideWidth = slide.offsetWidth;
-	// var slideHeight = slide.offsetHeight;
+	// Reset the testing styles and apply if testing is enabled this time
+	aTag.style.background = "none";
+	aTag.style.opacity = "0";
+	if (testing) {
+		aTag.style.background = "red";
+		aTag.style.opacity = "0.5";
+	}
 }
+
+
+﻿
+var positions = {
+    slide1: {
+        cta: {
+            top: 100;
+            left: 200;
+        },
+        card: {
+            top: 50;
+            left: 30;
+        }
+    }
+};
 
 // Element where the slick slider is initialized on
 var slider = document.querySelector(".pagebuilder-slider");
